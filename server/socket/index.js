@@ -1,6 +1,7 @@
 
 let utils = require('../utils/utils')
-let room = require('./room')
+let handleRoom = require('./room')
+let handleAnwser = require('./answer')
 let {decipher, hpe} = utils;
 //进入pk的所有用户统计
 let userCollection={}
@@ -54,7 +55,7 @@ module.exports = (app,io)=>{
                 nickname: res0.nickname,
                 username: res0.username
             })
-            socket.emit('msg',`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
+            socket.send(`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
         }else if(pkroom.length==1){
             if(pkroom[0].uid!=uid){
                 pkroom.push({
@@ -62,23 +63,24 @@ module.exports = (app,io)=>{
                     nickname: res0.nickname,
                     username: res0.username
                 })
-                socket.emit('msg',`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
+                socket.send(`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
                 //递增pkRoomId
                 pkRoomId+=1
             }else{
-                socket.emit('msg',`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
+                socket.send(`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }
         }else if(pkroom.length==2){
             if(pkroom.some(item=>item.uid==uid)){
-                socket.emit('msg',`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
+                socket.send(`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }else{
-                socket.emit('msg',`user join room meet with unknown error`);
+                socket.send(`user join room meet with unknown error`);
             }
         }
         //更新pkroom
         pkRooms[userCollection[uid].roomid] = pkroom;
         //处理所有的pkroom
-        room(pkRooms, io, userCollection)
-        
+        handleRoom(pkRooms, io, userCollection)
+        //处理所有的答案
+        handleAnwser(socket, pkRooms, io, userCollection)
     })
 }

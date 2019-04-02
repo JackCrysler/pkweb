@@ -15,7 +15,7 @@
         <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
         <input type="text" placeholder="想说的话" id="info">
         <button id="send">连接socket</button>
-        <h3 id="userid"></h3>
+        <h3 id="userid">test</h3>
         <hr>
         <div class="display-table"></div>
         <div class="display-table2"></div>
@@ -35,14 +35,20 @@
         sendBtn.onclick=()=>{
             socket.open()
         }
-        socket.on('msg',info=>{
+        socket.on('message',info=>{
             displayTable.innerHTML = info
         })
 
         socket.on('pkinfo',data=>{
-            displayTable2.innerHTML = `PK对象：${data.username}`
-            console.log(data)
+            displayTable2.innerHTML = `PK对象：${data.username}-${data.nickname}`
+            
         })
+
+        userid.onclick=()=>{
+            socket.emit('test','mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+        }
+
+        socket.on('message',data=>{console.log(data)})
         
     </script>
 </body>
