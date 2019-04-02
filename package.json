@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server",
-    "web": "echo \"Error: no test specified\" && exit 1"
+    "serve": "nodemon server",
+    "web": "npm run dev"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "boom": "^7.3.0",
+    "cheerio": "^1.0.0-rc.2",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",

@@ -1,6 +1,13 @@
+/*
+ * @Description: 用户相关接口
+ * @Author: JackSmart
+ * @LastEditors: Please set LastEditors
+ * @Date: 2019-04-01 15:42:06
+ * @LastEditTime: 2019-04-02 19:37:23
+ */
 const utils = require('../utils/utils')
 const fs = require('fs')
-const privatekey = fs.readFileSync(__dirname+'/../private.key','utf-8')
+const privatekey = fs.readFileSync(process.cwd()+'/server/private.key','utf-8')
 const {hpe,cipher,hmac} = utils;
 
 let register = async (ctx,next)=>{
@@ -31,7 +38,7 @@ let login = async (ctx,next)=>{
     //使用用户名即可登陆，昵称可选
     let {username,nickname,password} = ctx.request.body;
     let secretPwd = hmac(password, privatekey)
-    let [err,res] = await hpe(ctx.mysql(`select * from pkuser where username='${username}' and password='${secretPwd}'`))
+    let [err,[res]] = await hpe(ctx.mysql(`select * from pkuser where username='${username}' and password='${secretPwd}'`))
 
     if(err){
         ctx.response.body = {
@@ -49,7 +56,7 @@ let login = async (ctx,next)=>{
     }
     //如果登陆时有nickname，更新数据库
     if(nickname){
-        let [err,res] = await hpe(ctx.mysql(`update pkuser set nickname='${nickname}' where username='${username}'`))
+        let [err] = await hpe(ctx.mysql(`update pkuser set nickname='${nickname}' where username='${username}'`))
         if(err){
             ctx.response.body = {
                 msg:err,
@@ -57,6 +64,7 @@ let login = async (ctx,next)=>{
             }
         }
     }
+    delete res.password;
     ctx.response.body = {
         msg:'success',
         code: 1,

@@ -12,12 +12,13 @@
 <body>
 
     <div>
-        <input type="text" placeholder="目标id" id="user">
+        <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
         <input type="text" placeholder="想说的话" id="info">
-        <button id="send">发送</button>
+        <button id="send">连接socket</button>
         <h3 id="userid"></h3>
         <hr>
         <div class="display-table"></div>
+        <div class="display-table2"></div>
     </div>
     <script>
         let user = document.querySelector('#user');
@@ -25,22 +26,22 @@
         let info = document.querySelector('#info')
         let userid = document.querySelector('#userid')
         let displayTable = document.querySelector('.display-table')
-        let socket = io('ws://192.168.199.157:8003?id=123',{
-            // autoConnect: false
-            
+        let displayTable2 = document.querySelector('.display-table2')
+        let uid = location.search.split('=')[1];
+        let socket = io(`ws://192.168.199.157:8001?uid=${uid}`,{
+            autoConnect: false
         })
 
-        socket.on('id',id=>{
-            userid.innerHTML = id
-        })
-        socket.emit('talk to', displayTable.innerHTML)
-        sendBtn.onclick = () => {
-            if(!user.value || !info.value)return;
-            socket.emit('talk to', `custom:id:${user.value}`, `${info.value}`)
+        sendBtn.onclick=()=>{
+            socket.open()
         }
-        socket.on('info',info=>{
-            displayTable.innerHTML =  displayTable.innerHTML +'<br/>'+ info
+        socket.on('msg',info=>{
+            displayTable.innerHTML = info
+        })
 
+        socket.on('pkinfo',data=>{
+            displayTable2.innerHTML = `PK对象：${data.username}`
+            console.log(data)
         })
         
     </script>
