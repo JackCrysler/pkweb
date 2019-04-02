@@ -72,7 +72,7 @@ module.exports = (app,io)=>{
             if(pkroom.some(item=>item.uid==uid)){
                 socket.emit('msg',`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }else{
-                socket.emit('msg',`user join room meet with error`);
+                socket.emit('msg',`user join room meet with unknown error`);
             }
         }
         //更新pkroom

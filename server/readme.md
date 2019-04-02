@@ -6,11 +6,12 @@
     2. questions
     3. awards
 
-## socket io api
+## socket api
 
     event: msg
-    向socket用户发送服务器信息
+    解释：向socket用户发送服务器信息
+
     event: pkinfo
-    向socket用户发送pk对象信息
+    解释：向socket用户发送pk对象信息
 
 
