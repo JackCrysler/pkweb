@@ -1,3 +1,4 @@
+# io
 
 ## sql table
 
@@ -5,8 +6,11 @@
     2. questions
     3. awards
 
-## socket io
+## socket io api
 
-    pk
+    event: msg
+    向socket用户发送服务器信息
+    event: pkinfo
+    向socket用户发送pk对象信息
 
 

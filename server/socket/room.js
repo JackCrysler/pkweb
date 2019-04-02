@@ -1,6 +1,20 @@
 module.exports = (pkRooms, io, userCollection) => {
+    
+    Object.entries(pkRooms).forEach(item=>{
+        let [rid,room] = item;
+        if(room.length<2) return;
+        let u1 = room[0];
+        let u1Socekt = userCollection[u1.uid]
+        let u2 = room[1];
+        let u2Socekt = userCollection[u2.uid];
+        io.to(u1Socekt.socketid).emit('pkinfo', u2)
+        io.to(u2Socekt.socketid).emit('pkinfo', u1)
+    })
+    
+}
 
-    /* 
+/* 
+    数据结构参考
     let rooms = {
         1:[
             { 
@@ -21,17 +35,3 @@ module.exports = (pkRooms, io, userCollection) => {
         "2e139beffe138e76587be8525bdfd056":{"socketid":"4OCIZxbdCmzVKkPnAAAC","roomid":1}
     }
     */
-    // console.log('pkRooms:', pkRooms)
-    // console.log('userCollection:\n',userCollection)
-    Object.entries(pkRooms).forEach(item=>{
-        let [roomid,room] = item;
-        if(room.length<2) return;
-        let u1 = room[0];
-        let u1Socekt = userCollection[u1.uid]
-        let u2 = room[1];
-        let u2Socekt = userCollection[u2.uid];
-        io.to(u1Socekt.socketid).emit('pkinfo', u2)
-        io.to(u2Socekt.socketid).emit('pkinfo', u1)
-    })
-    
-}
