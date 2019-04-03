@@ -15,7 +15,7 @@
         <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
         <input type="text" placeholder="想说的话" id="info">
         <button id="send">连接socket</button>
-        <h3 id="userid">test</h3>
+        <h3 id="userid">获取题目信息</h3>
         <hr>
         <div class="display-table"></div>
         <div class="display-table2"></div>
@@ -28,7 +28,7 @@
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
-        let socket = io(`ws://192.168.199.157:8001?uid=${uid}`,{
+        let socket = io(`ws://192.168.1.121:8001?uid=${uid}`,{
             autoConnect: false
         })
 
@@ -43,12 +43,18 @@
             displayTable2.innerHTML = `PK对象：${data.username}-${data.nickname}`
             
         })
+        socket.on('error',err=>{
+            console.log(err)
+        })
 
         userid.onclick=()=>{
-            socket.emit('test','mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+            socket.emit('get question',{
+                uid
+            },(res)=>{
+                console.log(res)
+            })
         }
 
-        socket.on('message',data=>{console.log(data)})
         
     </script>
 </body>
