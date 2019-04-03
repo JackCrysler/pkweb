@@ -16,6 +16,9 @@
         <input type="text" placeholder="想说的话" id="info">
         <button id="send">连接socket</button>
         <h3 id="userid">获取题目信息</h3>
+        <button id="answer">发送答案</button>
+        <button id="score">获取PK结果</button>
+        <button id="allrooms">get all rooms</button>
         <hr>
         <div class="display-table"></div>
         <div class="display-table2"></div>
@@ -24,17 +27,29 @@
         let user = document.querySelector('#user');
         let sendBtn = document.querySelector('#send')
         let info = document.querySelector('#info')
+        let answer = document.querySelector('#answer')
+        let score = document.querySelector('#score')
         let userid = document.querySelector('#userid')
+        let allrooms = document.querySelector('#allrooms')
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
-        let socket = io(`ws://192.168.1.121:8001?uid=${uid}`,{
+        let socket = io(`ws://192.168.2.179:8001?uid=${uid}`,{
             autoConnect: false
         })
 
         sendBtn.onclick=()=>{
             socket.open()
         }
+
+        socket.on('disconnect', (reason) => {
+            if (reason === 'io server disconnect') {
+                // the disconnection was initiated by the server, you need to reconnect manually
+                socket.open();
+            }
+            // else the socket will automatically try to reconnect
+        });
+
         socket.on('message',info=>{
             displayTable.innerHTML = info
         })
@@ -46,11 +61,32 @@
         socket.on('error',err=>{
             console.log(err)
         })
+        socket.on('pk score',data=>{
+            console.log('pktarget',data)
+        })
 
         userid.onclick=()=>{
             socket.emit('get question',{
                 uid
             },(res)=>{
+                console.log(res)
+            })
+        }
+        answer.onclick=()=>{
+            socket.emit('set score',{
+                uid, score:Math.floor(Math.random()*80), qid:'123'
+            },function(res){
+                console.log(res)
+            })
+        }
+        score.onclick=()=>{
+            socket.emit('get result',{uid},(res)=>{
+                console.log(res)
+            })
+        }
+
+        allrooms.onclick=()=>{
+            socket.emit('get all rooms', (res)=>{
                 console.log(res)
             })
         }

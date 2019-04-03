@@ -3,7 +3,7 @@ let utils = require('../utils/utils')
 let handleRoom = require('./room')
 let handleAnwser = require('./answer')
 let handleQuestion = require('./question')
-let withAuth = require('./authorization')
+let handleResult = require('./result')
 let {decipher, hpe} = utils;
 //进入pk的所有用户统计, 一一映射
 let userCollection={}
@@ -47,6 +47,7 @@ module.exports = (app,io)=>{
                 room:[],
                 q:res1,
                 status: 1,
+                
             }
         } 
 
@@ -63,44 +64,59 @@ module.exports = (app,io)=>{
 
         //找到对应的pkroom，并更新数据，根据uid固定在某一个room
         let pkroom = pkRooms[userCollection[uid].roomid].room;
-
+        let defineUser = {
+            uid: uid,
+            nickname: res0.nickname,
+            username: res0.username,
+            score: {},
+            status:1
+        }
         if(pkroom.length==0){
             pkroom.push({
-                uid: uid,
-                nickname: res0.nickname,
-                username: res0.username
+                ...defineUser
             })
             socket.send(`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
-        }else if(pkroom.length==1){
+        }
+        if(pkroom.length==1){
             if(pkroom[0].uid!=uid){
                 pkroom.push({
-                    uid: uid,
-                    nickname: res0.nickname,
-                    username: res0.username
+                    ...defineUser
                 })
                 socket.send(`${res0.username}-${res0.nickname} has joined room ${userCollection[uid].roomid}`)
-
+                pkRooms[pkRoomId].createtime = Date.now()
                 //递增pkRoomId
                 pkRoomId+=1
             }else{
                 socket.send(`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }
-        }else if(pkroom.length==2){
+        }
+        if(pkroom.length==2){
             if(pkroom.some(item=>item.uid==uid)){
                 socket.send(`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }else{
-                socket.send(`user join room meet with unknown error`);
+                console.log('uid', uid)
+                console.log('pkroom', pkroom)
+                socket.send(`user join room meet with unknown server error`);
             }
         }
+
+        socket.on('get all rooms', callback=>{
+            callback(pkRooms)
+        })
+
         //更新pkroom
         pkRooms[userCollection[uid].roomid].room = pkroom;
+
         //处理所有的pkroom
         handleRoom(pkRooms, io, userCollection);
-        //加载权限
-        withAuth(socket)
+
         //获取题目
         handleQuestion(socket, pkRooms, io, userCollection)
+
         //处理答案
         handleAnwser(socket, pkRooms, io, userCollection)
+
+        //获取结果
+        handleResult(socket, pkRooms, io, userCollection)
     })
 }

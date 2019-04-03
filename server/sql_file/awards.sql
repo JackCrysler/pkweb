@@ -1,4 +1,5 @@
 -- table pkuser cols: id username password nickname power
+-- all users award infomation
 CREATE TABLE IF NOT EXISTS `awards`(
    `aid` INT UNSIGNED AUTO_INCREMENT,
    `uid` VARCHAR(100) NOT NULL,

@@ -3,7 +3,7 @@ const app = new Koa()
 const Router = require('koa-router')
 const router = new Router()
 const routerConfig = require('./router')
-const mysql = require('./mysql')
+const mysqlCfg = require('./mysql')
 const bodyParser = require('koa-bodyparser')
 const server = require('http').createServer(app.callback())
 const io = require('socket.io')(server)
@@ -16,7 +16,7 @@ app.context.privatekey=privatekey
 //配置bodyparser
 app.use(bodyParser())
 //配置mysql
-mysql(app)
+mysqlCfg.setMysqlWithKoa(app)
 //配置路由
 app.use(routerConfig(router))
 //配置io
