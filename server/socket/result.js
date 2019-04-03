@@ -34,6 +34,5 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
         })
         let winnerId = u1Scrore>u2Scrore?u1.uid:u2.uid;
         let re = await services.updatePkUser(winnerId)
-        
     })
 }
