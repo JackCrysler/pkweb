@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-01 22:24:58
- * @LastEditTime: 2019-04-02 11:37:12
+ * @LastEditTime: 2019-04-04 09:34:59
  */
 const utils = require('../utils/utils')
 const _ = require('lodash')
@@ -68,7 +68,11 @@ for (let i = 0; i < 100; i++) {
     }
 }
 jackpot = _.shuffle(jackpot)
-
+/**
+ * @description: 抽福袋
+ * @param {type} 
+ * @return: 
+ */
 let luckyBag = async (ctx, next) => {
     let { uid, type = 0 } = ctx.request.query;
     let energy = {
@@ -134,7 +138,75 @@ let luckyBag = async (ctx, next) => {
     }
 
 }
+/**
+ * @description: 获取PK英雄榜
+ * @param {type} 
+ * @return: 
+ */
+let PKlist = async (ctx)=>{
+    let { uid } = ctx.request.query;
+    //查询该用户数据
+    let [err0, [userdata]] = await hpe(ctx.mysql(`select * from pkuser where uid='${uid}'`))
+    //查询所有列表
+    let [err1, list] = await hpe(ctx.mysql(`select username,nickname,power,pktimes,winning_count from pkuser`))
+    if(!err0 && !err1){
+        delete userdata.password
+        ctx.response.body={
+            msg:userdata,
+            code:1,
+            pklist:list
+        }
+    }else{
+        ctx.response.body={
+            msg:[err0,err1],
+            code:0
+        }
+    }
+}
 
+/**
+ * @description: 我的奖品
+ * @param {type} 
+ * @return: 
+ */
+let prizes = async (ctx)=>{
+    let { uid } = ctx.request.query;
+    //查询该用户获奖信息
+    let [err0, list] = await hpe(ctx.mysql(`select * from awards where uid='${uid}'`))
+    
+    if(!err0){
+        ctx.response.body={
+            msg:list,
+            code:1
+        }
+    }else{
+        ctx.response.body={
+            msg:err0,
+            code:0
+        }
+    }
+}
+
+/**
+ * @description: 活动规则
+ * @param {type} 
+ * @return: 
+ */
+let rules = async (ctx)=>{
+    let rules = [
+        `每局比赛两人参与，五道题，答对一道题最多可得100分，答得越慢分越少，答错不得分。`,
+        `有十秒时间限制，如果在第一秒答对，得100分，如果用了一秒（即还剩9秒），则得80分，剩8秒则得60分，以此类推`,
+        `PK获胜得到10能量值，能量值超过20即可抽福袋`
+    ]
+    ctx.response.body={
+        code:1,
+        msg:'success',
+        rules
+    }
+}
 module.exports = {
-    "GET /luckyBag": luckyBag
+    "GET /luckyBag": luckyBag,
+    "GET /pklist":PKlist,
+    "GET /prizes":prizes,
+    "GET /rules":rules,
 }

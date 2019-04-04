@@ -32,7 +32,18 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
             ],
             msg:'The Winner：'+ (u1Scrore>u2Scrore?u1.username:u2.username)
         })
-        let winnerId = u1Scrore>u2Scrore?u1.uid:u2.uid;
-        let re = await services.updatePkUser(winnerId)
+        let [winnerId,loserId] = u1Scrore>u2Scrore?[u1.uid, u2.uid]:[u2.uid, u1.uid];
+        let winnerRes = await services.updateWinner(winnerId);
+        if(winnerRes.code=1){
+            socket.send(`${winnerId}信息存储成功`)
+        }else{
+            socket.send(winnerRes.msg)
+        }
+        let loserRes = await services.updateWinner(loserId);
+        if(loserRes.code=1){
+            socket.send(`${loserRes}信息存储成功`)
+        }else{
+            socket.send(loserRes.msg)
+        }
     })
 }
