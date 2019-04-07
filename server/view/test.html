@@ -19,6 +19,11 @@
         <button id="answer">发送答案</button>
         <button id="score">获取PK结果</button>
         <button id="allrooms">get all rooms</button>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="uid" name="uid">
+            <input type="file" name="file"/>
+            <input type="submit" value="ok"/>
+        </form>
         <hr>
         <div class="display-table"></div>
         <div class="display-table2"></div>
@@ -34,7 +39,7 @@
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
-        let socket = io(`ws://192.168.2.179:8001?uid=${uid}`,{
+        let socket = io(`ws://192.168.31.212:8001?uid=${uid}`,{
             autoConnect: false
         })
 

@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-01 15:42:06
- * @LastEditTime: 2019-04-02 19:37:23
+ * @LastEditTime: 2019-04-04 11:32:08
  */
 const utils = require('../utils/utils')
 const fs = require('fs')
@@ -71,8 +71,39 @@ let login = async (ctx,next)=>{
         data: res
     }
 }
+/**
+ * @description: 上传头像
+ * @param {type} 
+ * @return: 
+ */
+let portrait = async (ctx)=>{
+    let {uid,purl} = ctx.request.body
+    if(!uid || !purl){
+        ctx.response.body={
+            code:0,
+            msg:'params uid,purl are missing'
+        }
+        return
+    }
+    let [err,res] = await hpe(ctx.mysql(`update pkuser set portrait_url='${purl}' where uid='${uid}'`))
+
+    if(err){
+        ctx.response.body={
+            code:0,
+            msg:err
+        }
+        return
+    }
+    ctx.response.body={
+        code:1,
+        msg:'success'
+    }
+
+}
+
 
 module.exports = {
     'POST /register':register,
     'POST /login':login,
+    'POST /addPortrait':portrait,
 }
