@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "boom": "^7.3.0",
     "cheerio": "^1.0.0-rc.2",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
