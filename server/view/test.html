@@ -12,21 +12,31 @@
 <body>
 
     <div>
-        <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
-        <input type="text" placeholder="想说的话" id="info">
-        <button id="send">连接socket</button>
-        <h3 id="userid">获取题目信息</h3>
-        <button id="answer">发送答案</button>
-        <button id="score">获取PK结果</button>
+        <!-- <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
+        <input type="text" placeholder="想说的话" id="info"> -->
+        <button id="send">点我连接socket</button>
+        <h3 id="userid">点我获取题目信息</h3>
+        <button id="answer">生成一个随机的答案给对手</button>
+        <button id="score">随时获取PK结果</button>
         <button id="allrooms">get all rooms</button>
+        
+        <hr>
+        <div class="display-table"></div>
+        <div class="display-table2"></div>
+
+        <br>
+        <br>
+        <br>
+        <hr>
+        
+        <br>
+        
+        <h5>头像上传</h5>
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="uid" name="uid">
             <input type="file" name="file"/>
             <input type="submit" value="ok"/>
         </form>
-        <hr>
-        <div class="display-table"></div>
-        <div class="display-table2"></div>
     </div>
     <script>
         let user = document.querySelector('#user');
@@ -52,7 +62,9 @@
             if (reason === 'io server disconnect') {
                 // the disconnection was initiated by the server, you need to reconnect manually
                 //socket.open();
-                console.log('您所在的房间已解散，请重新进房间：socket.open()')
+                console.log('您所在的房间已解散，请重新加入PK：socket.open()')
+                displayTable2.innerHTML=''
+                displayTable.innerHTML=''
             }
             // else the socket will automatically try to reconnect
         });
