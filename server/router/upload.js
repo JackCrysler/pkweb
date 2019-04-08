@@ -1,5 +1,6 @@
 const multer = require('koa-multer')
 const path = require('path')
+//文件存储路径
 const fileSave = path.resolve(__dirname, '../../public/uploads/')
 
 //文件上传

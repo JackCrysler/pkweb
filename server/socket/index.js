@@ -4,6 +4,7 @@ let handleRoom = require('./room')
 let handleAnwser = require('./answer')
 let handleQuestion = require('./question')
 let handleResult = require('./result')
+let handleDestroy = require('./destroy')
 let {decipher, hpe} = utils;
 //进入pk的所有用户统计, 一一映射
 let userCollection={}
@@ -14,7 +15,7 @@ module.exports = (app,io)=>{
     
     io.on('connection',async (socket)=>{
         let {uid} = socket.handshake.query;
-        
+        // console.log('socket.client.sockets:::\n',socket.client.sockets)
         if(!uid || uid=='undefined'){
             //send 等价于 emit('message','info')
             socket.send('query params uid missing')
@@ -38,9 +39,9 @@ module.exports = (app,io)=>{
 
         if(!pkRooms[pkRoomId]){//如果没有房间，就创建一个房间
             //选取一套题目
-            let [err1,res1] = await hpe(app.context.mysql(`SELECT * FROM questions order by rand()  LIMIT 5`))
+            let [err1,res1] = await hpe(app.context.mysql(`SELECT * FROM questions order by rand() LIMIT 5`))
             if(err1){
-                socket.send('获取题目失败，请重试')
+                socket.send('获取题目失败')
                 return;
             }
             pkRooms[pkRoomId]={
@@ -118,5 +119,8 @@ module.exports = (app,io)=>{
 
         //获取结果
         handleResult(socket, pkRooms, io, userCollection)
+
+        //销毁房间
+        handleDestroy(socket, pkRooms, io, userCollection)
     })
 }

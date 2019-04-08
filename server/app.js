@@ -20,6 +20,7 @@ app.context.privatekey=privatekey
 
 //配置bodyparser
 app.use(bodyParser())
+//配置静态资源服务器
 app.use(staticServe(publicPath))
 //配置mysql
 mysqlCfg.setMysqlWithKoa(app)

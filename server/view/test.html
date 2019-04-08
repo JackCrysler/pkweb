@@ -39,7 +39,7 @@
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
-        let socket = io(`ws://192.168.31.212:8001?uid=${uid}`,{
+        let socket = io(`ws://192.168.199.157:8001?uid=${uid}`,{
             autoConnect: false
         })
 
@@ -48,15 +48,18 @@
         }
 
         socket.on('disconnect', (reason) => {
+            
             if (reason === 'io server disconnect') {
                 // the disconnection was initiated by the server, you need to reconnect manually
-                socket.open();
+                //socket.open();
+                console.log('您所在的房间已解散，请重新进房间：socket.open()')
             }
             // else the socket will automatically try to reconnect
         });
 
         socket.on('message',info=>{
-            displayTable.innerHTML = info
+            displayTable.innerHTML = info;
+            displayTable2.innerHTML = ''
         })
 
         socket.on('pkinfo',data=>{
