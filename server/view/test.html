@@ -14,10 +14,10 @@
     <div>
         <!-- <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
         <input type="text" placeholder="想说的话" id="info"> -->
-        <button id="send">点我连接socket</button>
-        <h3 id="userid">点我获取题目信息</h3>
+        <button id="send">点我连接socket进行匹配</button>
+        <button id="userid">如果匹配到对手，点我可以获取题目信息</button>
         <button id="answer">生成一个随机的答案给对手</button>
-        <button id="score">随时获取PK结果</button>
+        <button id="score">可以随时获取PK结果</button>
         <button id="allrooms">get all rooms</button>
         
         <hr>
@@ -70,7 +70,7 @@
         });
 
         socket.on('message',info=>{
-            displayTable.innerHTML = info;
+            displayTable.innerHTML = JSON.stringify(info);
             displayTable2.innerHTML = ''
         })
 
@@ -82,7 +82,7 @@
             console.log(err)
         })
         socket.on('pk score',data=>{
-            console.log('pktarget',data)
+            console.log('对手的答题结果：',data)
         })
 
         userid.onclick=()=>{
