@@ -30,7 +30,8 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
                     sum:u2Scrore
                 },
             ],
-            msg:'The Winner：'+ (u1Scrore>u2Scrore?u1.username:u2.username)
+            winner: (u1Scrore>u2Scrore?u1.username:u2.username),
+            msg:'The winner is: '+ (u1Scrore>u2Scrore?u1.nickname:u2.nickname)
         })
         let [winnerId,loserId] = u1Scrore>u2Scrore?[u1.uid, u2.uid]:[u2.uid, u1.uid];
         let winnerRes = await services.updateWinner(winnerId);

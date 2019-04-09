@@ -22,15 +22,11 @@
         
         <hr>
         <div class="display-table"></div>
-        <div class="display-table2"></div>
-
         <br>
+        <div class="display-table2"></div>
         <br>
         <br>
         <hr>
-        
-        <br>
-        
         <h5>头像上传</h5>
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="uid" name="uid">
@@ -49,7 +45,7 @@
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
-        let socket = io(`ws://192.168.199.157:8001?uid=${uid}`,{
+        let socket = io(`ws://192.168.31.212:8001?uid=${uid}`,{
             autoConnect: false
         })
 

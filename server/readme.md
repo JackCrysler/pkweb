@@ -8,7 +8,7 @@
 
 ## socket api
 
-        event: msg  |   解释：向socket用户发送服务器信息
+        event: message  |   解释：client客户端接收服务器信息
         
         event: pkinfo   |  解释：向socket用户发送pk对象信息
         
@@ -28,7 +28,7 @@
 
         event: 'pk score'  |  解释：获取pk对象的题目得分
 
-            socket.on('pktarget score',{qid,score,uid}=>{
+            socket.on('pk score',{qid,score,uid}=>{
                 console.log(qid,score)
             })
 

@@ -1,4 +1,3 @@
-
 let utils = require('../utils/utils')
 let handleRoom = require('./room')
 let handleAnwser = require('./answer')
@@ -95,8 +94,8 @@ module.exports = (app,io)=>{
             if(pkroom.some(item=>item.uid==uid)){
                 socket.send(`${res0.username}-${res0.nickname} already joined room ${userCollection[uid].roomid}`);
             }else{
-                console.log('uid', uid)
-                console.log('pkroom', pkroom)
+                // console.log('uid', uid)
+                // console.log('pkroom', pkroom)
                 socket.send(`user join room meet with unknown server error`);
             }
         }
