@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-01 15:42:06
- * @LastEditTime: 2019-04-04 11:32:08
+ * @LastEditTime: 2019-04-10 13:55:22
  */
 const utils = require('../utils/utils')
 const fs = require('fs')
@@ -37,6 +37,7 @@ let register = async (ctx,next)=>{
 let login = async (ctx,next)=>{
     //使用用户名即可登陆，昵称可选
     let {username,nickname,password} = ctx.request.body;
+    console.log({username,nickname,password})
     let secretPwd = hmac(password, privatekey)
     let [err,[res]] = await hpe(ctx.mysql(`select * from pkuser where username='${username}' and password='${secretPwd}'`))
 

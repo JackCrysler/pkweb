@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-03 15:51:19
- * @LastEditTime: 2019-04-09 10:30:08
+ * @LastEditTime: 2019-04-09 10:54:31
  */
 let timer=null;
 module.exports = (socket, pkRooms, io, userCollection)=>{
@@ -21,7 +21,6 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
         let leftUserId = leftUser.uid;
         let leftUserNickname = leftUser.nickname;
         
-        // console.log(Object.keys(io.sockets.sockets))
         //关闭房间里另一个人的socket连接，然后删除对应的房间和socketid映射
         let leftUserSocket = io.of('/').sockets[userCollection[leftUserId].socketid]
         if(leftUserSocket){
@@ -31,7 +30,7 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
             delete userCollection[leftUserId];
         }
         
-    });
+    })
 }
 
 

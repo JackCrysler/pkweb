@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>登陆</h1>
+    用户名：<input id="username" type="test" name="username" />
+    密码：<input id="password" type="password" name="password" />
+    <button id="login">登陆</button>
+    <script>
+        let username = document.querySelector('#username')
+        let password = document.querySelector('#password')
+        let login = document.querySelector('#login')
+        login.onclick = () => {
+            let data = JSON.stringify({
+                username:username.value,
+                password:password.value,
+            })
+            fetch('/login', {
+                    method: "POST",
+                    headers: {
+                        'content-type': "application/json"
+                    },
+                    body: data
+                })
+                .then(res => res.json())
+                .then(res => {
+
+                    location.href=`http://localhost:3000/start?uid=${res.data.uid}`
+                })
+        }
+    </script>
+</body>
+
+</html>

@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div>
         <!-- <input type="text" placeholder="目标id" value="2e139beffe138e76587be8525bdfd056" id="user">
         <input type="text" placeholder="想说的话" id="info"> -->
@@ -33,6 +32,8 @@
             <input type="file" name="file"/>
             <input type="submit" value="ok"/>
         </form>
+        <hr>
+        文件上传 <input type="file" id="test-file" name="file">
     </div>
     <script>
         let user = document.querySelector('#user');
@@ -42,6 +43,7 @@
         let score = document.querySelector('#score')
         let userid = document.querySelector('#userid')
         let allrooms = document.querySelector('#allrooms')
+        let testFile = document.querySelector('#test-file')
         let displayTable = document.querySelector('.display-table')
         let displayTable2 = document.querySelector('.display-table2')
         let uid = location.search.split('=')[1];
@@ -74,9 +76,11 @@
             displayTable2.innerHTML = `PK对象：${data.username}-${data.nickname}`
             
         })
+
         socket.on('error',err=>{
             console.log(err)
         })
+
         socket.on('pk score',data=>{
             console.log('对手的答题结果：',data)
         })
@@ -95,6 +99,7 @@
                 console.log(res)
             })
         }
+
         score.onclick=()=>{
             socket.emit('get result',{uid},(res)=>{
                 console.log(res)
@@ -107,7 +112,18 @@
             })
         }
 
-        
+        testFile.onchange=(e)=>{
+            let formdata = new FormData()
+            formdata.append('file',e.target.files[0])
+            fetch('/upload',{
+                "content-type":"multipart/form-data",
+                body:formdata,
+                method:"POST"
+            }).then(res=>res.json())
+            .then(res=>{
+                console.log(res)
+            })
+        }
     </script>
 </body>
 

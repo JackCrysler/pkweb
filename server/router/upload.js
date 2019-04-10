@@ -1,3 +1,9 @@
+// content-type: 
+// 1 application/json => application/x-www-form-urlencoded 字符串
+// 2 multipart/form-data
+// 3 text/plain
+
+
 const multer = require('koa-multer')
 const path = require('path')
 //文件存储路径
@@ -24,6 +30,7 @@ let upload = multer({
 
 
 module.exports = (router) => {
+    // content-type  multipart/form-data  文件域 name=='file' post
     router.post('/upload', upload.single('file'), async (ctx, next) => {
         let {file} = ctx.req
         let purl = `/uploads/${file.filename}`;

@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-01 22:34:27
- * @LastEditTime: 2019-04-03 11:05:44
+ * @LastEditTime: 2019-04-10 14:48:58
  */
 const fs = require('mz/fs')
 const path = require('path')
@@ -11,6 +11,12 @@ const root = path.resolve(process.cwd(),'server')
 let test = async (ctx,next)=>{
 
     let tpl = await fs.readFileSync(root+'/view/test.html','utf-8')
+    ctx.response.type = 'text/html';
+    ctx.response.body=tpl;
+}
+let login = async (ctx,next)=>{
+
+    let tpl = await fs.readFileSync(root+'/view/login.html','utf-8')
     ctx.response.type = 'text/html';
     ctx.response.body=tpl;
 }
@@ -32,5 +38,6 @@ let addq = async (ctx,next)=>{
 }
 module.exports = {
     "GET /test":test,
+    "GET /login":login,
     "GET /addQuestion":addq
 }
