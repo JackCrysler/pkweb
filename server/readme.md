@@ -44,6 +44,12 @@
                 console.log(res)
             })
 
+        event: 'user left'  |   房间中的用户中途离开 
+
+            socket.on('user left',info=>{
+                console.log(info)
+            })
+
     tips:
 
         如果发生中断，请尝试在客户端先socket.close()再socket.open()重新建立连接
