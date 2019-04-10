@@ -26,7 +26,7 @@
                 console.log(res)
             })
 
-        event: 'pk score'  |  解释：获取pk对象的题目得分
+        event: 'get pkscore'  |  解释：获取pk对象的题目得分
 
             socket.on('pk score',{qid,score,uid}=>{
                 console.log(qid,score)

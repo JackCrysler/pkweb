@@ -27,20 +27,7 @@ export default class pkstart extends Component {
       console.log(data)
       this.setState({
         pkusername:data.nickname
-      })
-      // let count =1
-      // function step(){
-      //   count+=1
-      //   setTimeout(()=>{
-      //     console.log(test)
-      //     if(count>3){
-
-      //     }else{
-      //       step()
-      //     }
-      //   },1000)
-      // }
-      
+      })  
 
       this.timer = setInterval(()=>{
         if(this.state.countTime<=1){

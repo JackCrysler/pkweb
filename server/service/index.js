@@ -12,7 +12,7 @@ let updateWinner = async (winnerId, loserId) => {
     }
     let power,pktimes,winningCount;
     power = (res0[0].power != null && res0[0].power!= 'NaN') ? (res0[0].power * 1 + 10):10;
-    pktimes = res0[0].pktimes+1
+    pktimes = res0[0].pktimes*1+1
     winningCount = res0[0].winning_count+1
     let [err1, res1] = await hpe(mysqlCfg.mysqlp(`update pkuser set power='${power}',pktimes='${pktimes}',winning_count='${winningCount}'  where uid='${winnerId}'`))
     if (err1) return {
@@ -31,7 +31,7 @@ let updateLoser = async (loserId) => {
         code: 0
     }
     let pktimes;
-    pktimes = res0[0].pktimes+1
+    pktimes = res0[0].pktimes*1+1
     let [err1, res1] = await hpe(mysqlCfg.mysqlp(`update pkuser set pktimes='${pktimes}' where uid='${loserId}'`))
     if (err1) return {
         msg: err1,

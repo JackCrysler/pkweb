@@ -3,9 +3,9 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-03 15:51:19
- * @LastEditTime: 2019-04-10 15:59:49
+ * @LastEditTime: 2019-04-10 16:17:37
  */
-let timer=null;
+
 module.exports = (socket, pkRooms, io, userCollection)=>{
     socket.on('disconnect', (reason) => {
         // ...
