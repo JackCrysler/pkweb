@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-03 15:51:19
- * @LastEditTime: 2019-04-09 10:54:31
+ * @LastEditTime: 2019-04-10 15:57:35
  */
 let timer=null;
 module.exports = (socket, pkRooms, io, userCollection)=>{
@@ -24,6 +24,7 @@ module.exports = (socket, pkRooms, io, userCollection)=>{
         //关闭房间里另一个人的socket连接，然后删除对应的房间和socketid映射
         let leftUserSocket = io.of('/').sockets[userCollection[leftUserId].socketid]
         if(leftUserSocket){
+            leftUserSocket.send('PK对手已离开，请重新进入PK');
             leftUserSocket.disconnect(true)
             delete pkRooms[userCollection[uid].roomid]
             delete userCollection[uid]
