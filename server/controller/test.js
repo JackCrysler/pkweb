@@ -3,7 +3,7 @@
  * @Author: JackSmart
  * @LastEditors: Please set LastEditors
  * @Date: 2019-04-01 22:34:27
- * @LastEditTime: 2019-04-12 18:59:16
+ * @LastEditTime: 2019-04-12 19:07:36
  */
 const fs = require('mz/fs')
 const path = require('path')
@@ -34,7 +34,7 @@ let addq = async (ctx,next)=>{
     //         }
     // }
     
-    // ctx.response.body = sortQestion
+    // ctx.response.body = sortQestion·
 }
 module.exports = {
     "GET /test":test,
