@@ -8,14 +8,14 @@ export default class Start extends Component {
       </div>
     )
   }
-  startConnect=()=>{
-      socket.open()
-      
-      this.props.history.push('/pkstart',{
-        uid:window.location.search.substring(1).split('=')[1]
-      })
+  startConnect = () => {
+    socket.open()
+
+    this.props.history.push('/pkstart', {
+      uid: window.location.search.substring(1).split('=')[1]
+    })
   }
-  componentDidMount(){
+  componentDidMount() {
 
   }
 }
