@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "ioredis": "^4.22.0",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-multer": "^1.0.2",
@@ -20,6 +21,8 @@
     "lodash": "^4.17.11",
     "mysql": "^2.16.0",
     "mz": "^2.7.0",
+    "nodemon": "^2.0.7",
+    "redis": "^3.0.2",
     "socket.io": "^2.2.0"
   }
 }

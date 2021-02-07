@@ -10,4 +10,3 @@
     2. 启动前端服务: cd web => 执行 npm run dev
     3. 注册=>[/register](http://127.0.0.1:8001/register) 登陆=>[/login](http://127.0.0.1:8001/login)
     4. 登陆后带uid进入前端SPA应用，开始进行PK，需要至少2个人同时玩
-    

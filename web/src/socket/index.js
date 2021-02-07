@@ -6,7 +6,7 @@ let socket = io('ws://127.0.0.1:8001?uid='+uid,{
 })
 
 socket.on('message',info=>{
-    console.log(info)
+    console.log('socket info ====> ', info)
 })
 
 export default socket
